@@ -1,0 +1,105 @@
+
+Llama
+
+	This is not a single model. There are a bunch of models:
+
+	- Base model: next-word-predictors of internet data. Useful for developers who want to further fine-tune it for their specific use-case
+
+	- Chat-based-models: Trained to behave like a chat-assistant (i.e. have instruction-following capabilities)
+
+	- Computer code models: Highly specialized for writing computer code (this is because coding is highly structured and therefore can be mimicked by LLM's easily)
+
+Hosting
+
+	- External API service
+
+		Pros: Delegate upgrades to provider, scalable, low barrier to entry
+
+		Cons: Privacy, regulatory/compliance concerns
+
+		Examples: AWS Bedrock, Anyscale, GCP, Azure
+
+	- Self-configured cloud
+
+		Pros: Better privacy, enterprise security
+
+		Cons: Maintenance costs, scaling difficulty
+
+	- Host on your computer
+
+		Pros: Strongest privacy, no network calls leading to better latency
+
+		Cons: Impractical for large models
+
+Conversations
+
+	LLM's are stateless by default (regardless of the model type, i.e., be it base model or fine-tuned model etc)
+
+	All the chat applications, like ChatGPT and others, pass all prior prompts + responses to the LLM to keep track of the conversation
+
+	Example:
+
+	prompt_chat = f"""
+
+		User: {prompt 1}
+		Assistant: {response 1}
+		User: {prompt 2}
+		Assistant: {response 2}
+		User: {prompt 3}
+
+	"""
+
+Prompt Engineering
+
+	1. Provide examples of the task you are trying to carry out
+
+		LLM's can be guided to output literally whatever you can imagine. You just have to be able to describe it in your prompt
+
+		prompt = f"""
+			Message: Hi Amit, I loved my birthday card!
+			Sentiment: 
+		"""
+
+		The above prompt is called "zero-shot prompt" because you are NOT giving any examples to the model, and are relying on it's intelligence to determine the output
+
+		On the other hand, if you provide one example, it is called "one-shot prompt"
+
+		prompt = f"""
+			Message: Dad, you are 20 minutes late for my piano recital!!
+			Sentiment: Negative
+			Message: Hi Amit, I loved my birthday card!
+			Sentiment: 
+		"""
+
+		Two or more examples: few-shot prompting
+
+		Note: The larger the model, the less prompt-engineering is required to steer the model. But don't forget that prompt-engineering is always useful for the developer as it gives them control over the model's response.
+
+		Another special category of prompting is Chain-Of-Thought prompting. This guides the model to think step-by-step. It acts like a scratch pad for the model which indirectly improves the probability of outputting more relevant tokens thereby finally answering our prompt.
+
+	2. Specifying how to format responses
+
+	3. Requesting that the model assume a particular "role or persona" when creating its response
+
+Note: Llama2 70B is ~140GB
+
+Model Evaluation
+
+	- Public Benchmarks
+
+		- Commonsense reasoning
+		- World Knowledge
+		- Reading Comprehension
+
+	- Safety/alignment performance
+
+		- TruthfulQA
+		- Toxigen
+
+	Note: One interesting observation here is that the base models always perform poorly on "afety/alignment performance" category because they are not fine-tuned. They have astounding world knowledge and reasoning capabilities because they've been trained on internet (and third-party) data, however, at the same time they might output which is toxic, or false because there is no quality-control
+
+Llama Guard
+
+	Fine-tuned model for safeguarding other LLM responses
+
+	Note: Llama Guard must be placed in-between the user's prompt and the other LLM's response, i.e., before the prompt is sent to LLM and before the response is sent to the user. In the first situation, we catch issues with user's prompt directly. In the second situation, we catch more notorious scenarios wherein the user might be trying to fool the model to reveal dangerous/toxic details
