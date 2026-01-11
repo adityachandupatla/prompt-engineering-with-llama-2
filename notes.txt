@@ -96,7 +96,7 @@ Model Evaluation
 		- TruthfulQA
 		- Toxigen
 
-	Note: One interesting observation here is that the base models always perform poorly on "afety/alignment performance" category because they are not fine-tuned. They have astounding world knowledge and reasoning capabilities because they've been trained on internet (and third-party) data, however, at the same time they might output which is toxic, or false because there is no quality-control
+	Note: One interesting observation here is that the base models always perform poorly on "safety/alignment performance" category because they are not fine-tuned. They have astounding world knowledge and reasoning capabilities because they've been trained on internet (and third-party) data, however, at the same time they might output which is toxic, or false because there is no quality-control
 
 Llama Guard
 
